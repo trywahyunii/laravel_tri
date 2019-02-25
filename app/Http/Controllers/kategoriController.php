@@ -26,6 +26,14 @@ class kategoriController extends Controller
                 'kategori'=>'required|between:3,100|unique:kategori,nama_kategori',
         ])->validate();
 
-    	return 'Fungsi Save';
+    	$result = new Kategori;
+        $result->nama_kategori = $req->kategori;
+
+        if( $result->save() ){
+            return redirect()->route('admin.kategori')
+                    ->with('result','success');
+        } else {
+            return back()->with('result','fail')->withInput();
+        }
     }
 }
